@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
     # configuration tools to run from the .conf file in the same directory
     publicwebserver.vm.provision "shell", inline: <<-SHELL
       apt-get update
-      apt-get install -y appache2 php libapache2-mod-php
+      apt-get install -y apache2 php libapache2-mod-php
 
       # Change VM's webserver's config to use shared folder and 
       # look inside wasteless.conf

@@ -14,67 +14,39 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/focal64"
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+  # Instead of configuring the VM using the default template from runnning
+  # Vagrant init, we are configuring one using the method shown in David's
+  # Vagrant file for his multiple VMs.
+  config.vm.define "publicwebserver" do |publicwebserver|
+    publicwebserver.vm.hostname = "publicwebserver"
+    
+    # Port forwarding to allow host computer to connect to the specified localhost IP
+    # address through port 8080.
+    publicwebserver.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+    # Setting up private network so that, eventually, our three VMs will be able
+    # to connect to each other.
+    publicwebserver.vm.network "private_network", ip: "192.168.56.11"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+    # Neccessary line as we are developing in the labs...
+    publicwebserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+    # Provisioning commands for shell.
+    # This allows the apache server to be created and gets all of the appropriate
+    # configuration tools to run from the .conf file in the same directory
+    publicwebserver.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y appache2 php libapache2-mod-php
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
-
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
-
-  
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y apache2
-
-    # Change VM's webserver's configuration to use shared folder.
-    # (Look inside test-website.conf for specifics.)
-    cp /vagrant/test-website.conf /etc/apache2/sites-available/
-    # install our website configuration and disable the default
-    a2ensite test-website
-    a2dissite 000-default
-    service apache2 reload
-  SHELL
+      # Change VM's webserver's config to use shared folder and 
+      # look inside wasteless.conf
+      cp /vagrant/wasteless.conf /etc/apache2/sites-available/
+      # activate wasteless configuration
+      a2ensite wasteless
+      # disable default website provided with Apache
+      a2dissite 000-default
+      # restart webserver to get all of our website configurations
+      service apache2 restart
+    SHELL
+  end
 end

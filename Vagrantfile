@@ -49,4 +49,50 @@ Vagrant.configure("2") do |config|
       service apache2 restart
     SHELL
   end
+
+  config.vm.define "dbserver" do |dbserver|
+    # Naming the Database server
+    dbserver.vm.hostname = "dbserver"
+
+    # Creating the private network/linking it to IP address
+    dbserver.vm.network "private_network", ip: "192.168.2.12"
+    dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    
+    # Provisioning commands for shell, this time for database.
+    dbserver.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      
+      # Creating MySQL password
+      export MYSQL_PWD='349db_rootpassword'
+      
+      # Answering prompt to enter MySQL root password
+      echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections
+      echo "mysql-server mysql-server/root_password_again password $MYSQL_PWD" | debconf-set-selections
+
+      # Installing db server
+      apt-get -y install mysql-server
+
+      service mysql start
+
+      # Running setup commands to get database ready to use
+      echo "CREATE DATABASE wastelessdb;" | mysql
+      echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
+      echo "GRANT ALL PRIVILEGES ON wastelessdb.* TO 'webuser'@'%" | mysql
+
+      # Ensuring mysql comand will try to use MYSQL_PWD as db password.
+      export MYSQL_PWD='349db_password'
+
+      # Run sql within setup-wastelesdb.sql file
+      cat /vagrant/setup-wastelessdb.sql | mysql -u webuser wastelessdb
+
+      # Allowing webserving VM to conect with database VM
+      sed -i'' -e '/bind-address/s/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+      # restart MySQL server so that it picks up changes
+      service mysql restart
+    SHELL
+  end
+
+
+
 end

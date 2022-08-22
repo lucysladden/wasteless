@@ -18,7 +18,7 @@
 
     $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-    if (isset($_POST['reasturant-form'])) {
+    if (isset($_POST['restaurant-form'])) {
         $name = $_POST['name'];
         $address = $_POST['address'];
         $description = $_POST['description'];

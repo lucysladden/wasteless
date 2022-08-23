@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     dbserver.vm.hostname = "dbserver"
 
     # Creating the private network/linking it to IP address
-    dbserver.vm.network "private_network", ip: "192.168.2.12"
+    dbserver.vm.network "private_network", ip: "192.168.56.12"
     dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
     
     # Provisioning commands for shell, this time for database.
@@ -76,8 +76,8 @@ Vagrant.configure("2") do |config|
 
       # Running setup commands to get database ready to use
       echo "CREATE DATABASE wastelessdb;" | mysql
-      echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
-      echo "GRANT ALL PRIVILEGES ON wastelessdb.* TO 'webuser'@'%" | mysql
+      echo "CREATE USER 'webuser'@'%' IDENTIFIED BY '349db_password';" | mysql
+      echo "GRANT ALL PRIVILEGES ON wastelessdb.* TO 'webuser'@'%'" | mysql
 
       # Ensuring mysql comand will try to use MYSQL_PWD as db password.
       export MYSQL_PWD='349db_password'

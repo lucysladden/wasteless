@@ -15,9 +15,9 @@
     <h3>Food Entrys: </h3>
     <?php
     $db_host   = '192.168.56.12';
-    $db_name   = 'fvision';
+    $db_name   = 'wastelessdb';
     $db_user   = 'webuser';
-    $db_passwd = 'insecure_db_pw';
+    $db_passwd = '349db_password';
     
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
     
@@ -29,8 +29,7 @@
     $result = $conn->query($sql);
 
         // output data of each row
-      echo "<table>
-
+      /* echo "<table>
           <tr>
           <th>Id</th>
           <th>Name</th>
@@ -38,20 +37,16 @@
           <th>Description</th>
           <th>Price</th>
           <th>Time Frame</th>
-          </tr>";
+          </tr>"; */
         while($row = $q->fetch()) {
-
-          echo "<form action = deleteEntry.php method=post>";
-          echo '<input type ="hidden" name="entryID" value=' . $row['entryID'] . '>';
           echo "<tr>";
-          echo "<td>" . $row['entryID'] . "</td>";
-          echo "<td>" . $row['name'] . "</td>";
+          echo "<td>" . $row['leftovers_ID'] . "</td>";
+          echo "<td>" . $row['restaurant_name'] . "</td>";
           echo "<td>" . $row['address'] . "</td>";
           echo "<td>" . $row['description'] . "</td>";
           echo "<td>" . $row['price'] . "</td>";
-          echo "<td>" . $row['timeframe'] . "</td>";
-          echo "<td>" . " <input type = 'submit' id = 'entries' name = delete  value = " . 'delete' . " > </td>";
-          echo "</form>";
+          echo "<td>" . $row['latest_collection'] . "</td>";
+          echo "</tr>";
       }
   
 

@@ -37,6 +37,8 @@ Vagrant.configure("2") do |config|
     publicwebserver.vm.provision "shell", inline: <<-SHELL
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
+      # Covering ourselves incase php unsuccessfully installs
+      apt-get install php-mysql
 
       # Change VM's webserver's config to use shared folder and 
       # look inside wasteless.conf
@@ -71,6 +73,8 @@ Vagrant.configure("2") do |config|
     adminserver.vm.provision "shell", inline: <<-SHELL
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
+      # Covering ourselves incase php unsuccessfully installs
+      apt-get install php-mysql
 
       # Change VM's webserver's config to use shared folder and 
       # look inside wasteless.conf
@@ -105,6 +109,8 @@ Vagrant.configure("2") do |config|
 
       # Installing db server
       apt-get -y install mysql-server
+      # Covering ourselves incase php unsuccessfully installs
+      apt-get install php-mysql
 
       service mysql start
 
@@ -127,7 +133,5 @@ Vagrant.configure("2") do |config|
       service mysql restart
     SHELL
   end
-
-
 
 end

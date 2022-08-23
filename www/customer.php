@@ -16,7 +16,6 @@
   <main>
     <h3>Food Entrys: </h3>
     <?php
-    $sql = "SELECT * FROM leftovers";
 
     $db_host   = '192.168.56.13';
     $db_name   = 'wastelessdb';
@@ -26,9 +25,11 @@
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
     $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
-    if (isset($conn)) {
-      $result = $conn->query($sql);
-    }
+
+    $sql = "SELECT * FROM leftovers";
+
+
+    $result = $conn->query($sql);
     echo '<p>entry Submitted</p>';
 
     //output data of each row

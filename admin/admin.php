@@ -11,10 +11,10 @@
 <main>
     <h3>Food Entrys: </h3>
     <?php
-    $db_host   = '192.168.56.12';
+    $db_host   = '192.168.56.13';
     $db_name   = 'wastelessdb';
     $db_user   = 'webuser';
-    $db_passwd = '349db_password';
+    $db_passwd = 'password';
     
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
     
@@ -22,9 +22,9 @@
 
     $sql = "SELECT * FROM leftovers";
 
-    $result = mysqli_query($conn, $sql);
+    $result = $conn->query($sql);
+    
 
-    if (mysqli_num_rows($result) > 0) {
         // output data of each row
         echo "<table>
  
@@ -36,7 +36,7 @@
             <th>Price</th>
             <th>Time Frame</th>
             </tr>";
-        while ($row = mysqli_fetch_assoc($result)) {
+        while($row = $result->fetch()) {
 
             echo "<form action = deleteEntry.php method=post>";
             echo '<input type ="hidden" name="leftovers_ID" value=' . $row['leftovers_ID'] . '>';
@@ -49,9 +49,6 @@
             echo "<td>" . " <input type = 'submit' id = 'leftovers_ID' name = delete  value = " . 'delete' . " > </td>";
             echo "</form>";
         }
-    } else {
-        echo "0 results";
-    }
 
     ?>
 </main>

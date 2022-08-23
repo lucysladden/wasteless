@@ -11,33 +11,36 @@
 <body>
   <main>
     <?php
+    $console = 'console.log("testing 123")';
+
+    $js_code = '<script>' . $console . '</script>';
+
+    echo $js_code;
+
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $timeframe = $_POST['timeframe'];
+
+    $query = "INSERT INTO leftovers(restaurant_name,address,description,price,latest_collection) VALUES (" . "'" . $name . "'" . "," . "'" . $address . "'" . "," . "'" . $description . "'" . "," . "'" . $price . "'" . "," . "'" . $timeframe . "'" . ");";
+    $db_host   = '192.168.56.13';
+    $db_name   = 'wastelessdb';
+    $db_user   = 'webuser';
+    $db_passwd = 'password';
+
+    $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
+
+    $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
+
+    $conn->query($query);
+
+    $conn->query("INSERT INTO leftovers(restaurant_name,address,description,price,latest_collection) VALUES ('banana', '123 street', 'yummio', '$1.9 mil', '2022-08-29')");
+      
 
 
-
-    if (isset($_POST['restaurant-form'])) {
-
-      $name = $_POST['restaurant_name'];
-      $address = $_POST['address'];
-      $description = $_POST['description'];
-      $price = $_POST['price'];
-      $timeframe = $_POST['latest_collection'];
-
-      $query = "INSERT INTO leftovers(restaurant_name,address,description,price,latest_collection) VALUES (" . "'" . $name . "'" . "," . "'" . $address . "'" . "," . "'" . $description . "'" . "," . "'" . $price . "'" . "," . "'" . $timeframe . "'" . ");";
-      $db_host   = '192.168.56.13';
-      $db_name   = 'wastelessdb';
-      $db_user   = 'webuser';
-      $db_passwd = 'password';
-
-      $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
-
-      $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
-
-
-
-      echo '<p>entry Submitted</p>';
-
-      exit;
-    }
+      
+    // }
 
     ?>
 
@@ -45,36 +48,36 @@
 
 
     <h1>Food Donation Form</h1>
-    <form action="restaurant-form.php" method="POST">
+    <form action="" method="POST">
       <table>
         <tr>
           <td>Restaurant Name:</td>
           <td>
-            <input type="text" name="name" />
+            <input type="text" name="name" id="name" />
           </td>
         </tr>
         <tr>
           <td>Address:</td>
           <td>
-            <input type="text" name="address" />
+            <input type="text" name="address" id="address"/>
           </td>
         </tr>
         <tr>
           <td>Food description:</td>
           <td>
-            <input type="text" name="description" />
+            <input type="text" name="description" id="description"/>
           </td>
         </tr>
         <tr>
           <td>Price:</td>
           <td>
-            <input type="text" name="price" />
+            <input type="text" name="price" id="price" />
           </td>
         </tr>
         <tr>
           <td>Latest time to pick up:</td>
           <td>
-            <input type="datetime-local" name="timeframe" />
+            <input type="date" name="timeframe" id="timeframe"/>
           </td>
         </tr>
         <tr>

@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
     # configuration tools to run from the .conf file in the same directory
     publicwebserver.vm.provision "shell", inline: <<-SHELL
       apt-get update
-      apt-get install -y apache2 php libapache2-mod-php
+      apt-get install -y apache2 php libapache2-mod-php php-mysql
 
       # Change VM's webserver's config to use shared folder and 
       # look inside wasteless.conf
@@ -50,12 +50,46 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
+  config.vm.define "adminserver" do |adminserver|
+    # Naming the admin server
+    adminserver.vm.hostname = "adminserver"
+
+    # Port forwarding to allow host computer to connect to the specified localhost IP
+    # address through port 8081.
+    adminserver.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+
+    # Setting up private network so that, eventually, our three VMs will be able
+    # to connect to each other.
+    adminserver.vm.network "private_network", ip: "192.168.56.12"
+
+    # Neccessary line as we are developing in the labs...
+    adminserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+
+    # Provisioning commands for shell.
+    # This allows the apache server to be created and gets all of the appropriate
+    # configuration tools to run from the .conf file in the same directory
+    adminserver.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y apache2 php libapache2-mod-php php-mysql
+
+      # Change VM's webserver's config to use shared folder and 
+      # look inside wasteless.conf
+      cp /vagrant/admin.conf /etc/apache2/sites-available/
+      # activate wasteless configuration
+      a2ensite admin
+      # disable default website provided with Apache
+      a2dissite 000-default
+      # restart webserver to get all of our website configurations
+      service apache2 restart
+    SHELL
+  end
+
   config.vm.define "dbserver" do |dbserver|
     # Naming the Database server
     dbserver.vm.hostname = "dbserver"
 
     # Creating the private network/linking it to IP address
-    dbserver.vm.network "private_network", ip: "192.168.56.12"
+    dbserver.vm.network "private_network", ip: "192.168.56.13"
     dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
     
     # Provisioning commands for shell, this time for database.

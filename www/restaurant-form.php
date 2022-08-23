@@ -23,10 +23,10 @@
       $timeframe = $_POST['latest_collection'];
 
       $query = "INSERT INTO leftovers(restaurant_name,address,description,price,latest_collection) VALUES (" . "'" . $name . "'" . "," . "'" . $address . "'" . "," . "'" . $description . "'" . "," . "'" . $price . "'" . "," . "'" . $timeframe . "'" . ");";
-      $db_host   = '192.168.56.12';
+      $db_host   = '192.168.56.13';
       $db_name   = 'wastelessdb';
       $db_user   = 'webuser';
-      $db_passwd = '349db_password';
+      $db_passwd = 'password';
 
       $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
@@ -45,7 +45,7 @@
 
 
     <h1>Food Donation Form</h1>
-    <form action="" method="POST">
+    <form action="restaurant-form.php" method="POST">
       <table>
         <tr>
           <td>Restaurant Name:</td>

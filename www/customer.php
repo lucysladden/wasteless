@@ -16,20 +16,20 @@
   <main>
     <h3>Food Entrys: </h3>
     <?php
-    $sql = "SELECT * FROM food_entry";
+    $sql = "SELECT * FROM leftovers";
 
-    $db_host   = '192.168.56.12';
+    $db_host   = '192.168.56.13';
     $db_name   = 'wastelessdb';
     $db_user   = 'webuser';
-    $db_passwd = '349db_password';
+    $db_passwd = 'password';
 
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
-    // $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
-    // if (isset($conn)) {
-    //   $result = $conn->query($sql);
-    // }
-    // echo '<p>entry Submitted</p>';
+    $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
+    if (isset($conn)) {
+      $result = $conn->query($sql);
+    }
+    echo '<p>entry Submitted</p>';
 
     //output data of each row
     echo "<table>
@@ -41,16 +41,16 @@
           <th>Price</th>
           <th>Time Frame</th>
           </tr>";
-    // while($row = $result->fetch()) {
-    //       echo "<tr>";
-    //       echo "<td>" . $row['leftovers_ID'] . "</td>";
-    //       echo "<td>" . $row['restaurant_name'] . "</td>";
-    //       echo "<td>" . $row['address'] . "</td>";
-    //       echo "<td>" . $row['description'] . "</td>";
-    //       echo "<td>" . $row['price'] . "</td>";
-    //       echo "<td>" . $row['latest_collection'] . "</td>";
-    //       echo "</tr>";
-    //   }
+    while($row = $result->fetch()) {
+          echo "<tr>";
+          echo "<td>" . $row['leftovers_ID'] . "</td>";
+          echo "<td>" . $row['restaurant_name'] . "</td>";
+          echo "<td>" . $row['address'] . "</td>";
+          echo "<td>" . $row['description'] . "</td>";
+          echo "<td>" . $row['price'] . "</td>";
+          echo "<td>" . $row['latest_collection'] . "</td>";
+          echo "</tr>";
+      }
 
 
     ?>

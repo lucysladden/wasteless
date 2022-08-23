@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
       apt-get update
       
       # Creating MySQL password
-      export MYSQL_PWD='349db_rootpassword'
+      export MYSQL_PWD='password'
       
       # Answering prompt to enter MySQL root password
       echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections
@@ -109,12 +109,13 @@ Vagrant.configure("2") do |config|
       service mysql start
 
       # Running setup commands to get database ready to use
+      echo "FLUSH PRIVILEGES" | mysql
       echo "CREATE DATABASE wastelessdb;" | mysql
-      echo "CREATE USER 'webuser'@'%' IDENTIFIED BY '349db_password';" | mysql
+      echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'password';" | mysql
       echo "GRANT ALL PRIVILEGES ON wastelessdb.* TO 'webuser'@'%'" | mysql
 
       # Ensuring mysql comand will try to use MYSQL_PWD as db password.
-      export MYSQL_PWD='349db_password'
+      export MYSQL_PWD='password'
 
       # Run sql within setup-wastelesdb.sql file
       cat /vagrant/setup-wastelessdb.sql | mysql -u webuser wastelessdb

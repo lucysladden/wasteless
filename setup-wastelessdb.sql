@@ -7,3 +7,4 @@ CREATE TABLE leftovers (
     latest_collection DATE NOT NULL,
     PRIMARY KEY (leftovers_ID)
 );
+

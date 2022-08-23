@@ -11,11 +11,6 @@
 <body>
   <main>
     <?php
-    $console = 'console.log("testing 123")';
-
-    $js_code = '<script>' . $console . '</script>';
-
-    echo $js_code;
 
     $name = $_POST['name'];
     $address = $_POST['address'];
@@ -27,20 +22,13 @@
     $db_host   = '192.168.56.13';
     $db_name   = 'wastelessdb';
     $db_user   = 'webuser';
-    $db_passwd = 'password';
+    $db_passwd = 'wastelessdb_pw';
 
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
     $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
 
     $conn->query($query);
-
-    $conn->query("INSERT INTO leftovers(restaurant_name,address,description,price,latest_collection) VALUES ('banana', '123 street', 'yummio', '$1.9 mil', '2022-08-29')");
-      
-
-
-      
-    // }
 
     ?>
 

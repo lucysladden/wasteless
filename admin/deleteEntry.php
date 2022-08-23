@@ -1,8 +1,8 @@
 <?php
-$db_host   = '192.168.56.12';
+$db_host   = '192.168.56.13';
 $db_name   = 'wastelessdb';
 $db_user   = 'webuser';
-$db_passwd = '349db_password';
+$db_passwd = 'password';
 
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
@@ -12,5 +12,6 @@ if (isset($_POST['delete'])) {
     if (isset($conn)) {
         $error = $conn->query($deleteQuery);
     }
+    header("Location: admin.php");
     exit;
 }

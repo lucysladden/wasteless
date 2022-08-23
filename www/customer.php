@@ -9,18 +9,16 @@
 </head>
 
 <body>
-  <p>Display list of available food items</p>
-  <a href="/index.php">Home</a>
 
-  <h2> Admin </h2>
+  <h2> Customer: </h2>
   <main>
-    <h3>Food Entrys: </h3>
+    <h3>Available Food Entrys: </h3>
     <?php
 
     $db_host   = '192.168.56.13';
     $db_name   = 'wastelessdb';
     $db_user   = 'webuser';
-    $db_passwd = 'password';
+    $db_passwd = 'wastelessdb_pw';
 
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
@@ -30,7 +28,6 @@
 
 
     $result = $conn->query($sql);
-    echo '<p>entry Submitted</p>';
 
     //output data of each row
     echo "<table>
@@ -55,6 +52,7 @@
 
 
     ?>
+    <a href="/index.php">Home</a>
   </main>
 </body>
 

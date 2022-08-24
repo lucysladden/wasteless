@@ -2,7 +2,7 @@
 $db_host   = '192.168.56.13';
 $db_name   = 'wastelessdb';
 $db_user   = 'webuser';
-$db_passwd = 'password';
+$db_passwd = 'wastelessdb_pw';
 
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 

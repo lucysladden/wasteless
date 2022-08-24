@@ -41,11 +41,11 @@
             echo "<form action = deleteEntry.php method=post>";
             echo '<input type ="hidden" name="leftovers_ID" value=' . $row['leftovers_ID'] . '>';
             echo "<tr>";
-            echo "<td>" . $row['name'] . "</td>";
+            echo "<td>" . $row['restaurant_name'] . "</td>";
             echo "<td>" . $row['address'] . "</td>";
             echo "<td>" . $row['description'] . "</td>";
             echo "<td>" . $row['price'] . "</td>";
-            echo "<td>" . $row['timeframe'] . "</td>";
+            echo "<td>" . $row['latest_collection'] . "</td>";
             echo "<td>" . " <input type = 'submit' id = 'leftovers_ID' name = delete  value = " . 'delete' . " > </td>";
             echo "</form>";
         }

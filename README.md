@@ -12,3 +12,9 @@ TO RUN:
 1. Clone the latest wasteless repository from the link.
 2. Run "vagrant up" - ensuring you are in the correct repository.
 3. Navigate to either of the above localhost:portnumber links to test the VMs' functionalities.
+
+FOR DEVELOPERS:
+
+Follow the above steps to run the VMs. If you want to make changes to the applications' functionality (not the Vagrant file), best practice is to ssh into your desired VM from the command line (e.g. "vagrant ssh adminserver"). From here, you can make changes to the PHP files - or even add new ones. An example of a useful addition would be to extend the capability of the admin web page (currently it only supports deletion and is insecure - a login page would be a sensible addition).
+
+If you were wanting to change the Vagrant file (e.g. add a fourth VM or change the configuration of the existing VMs), this will****NEEDS UPDATING!

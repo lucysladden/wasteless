@@ -19,4 +19,6 @@ FOR DEVELOPERS:
 
 Follow the above steps to run the VMs. If you want to make changes to the applications' functionality (not the Vagrant file), best practice is to ssh into your desired VM from the command line (e.g. "vagrant ssh adminserver"). From here, you can make changes to the PHP files - or even add new ones. An example of a useful addition would be to extend the capability of the admin web page (currently it only supports deletion and is insecure - a login page would be a sensible addition).
 
-If you were wanting to change the Vagrant file (e.g. add a fourth VM or change the configuration of the existing VMs), this will****NEEDS UPDATING!
+As mentioned, the webpages will update automatically and so completely rebooting the VMs would be very inefficient and unnecessary. However, if for some reason things went awry, it would be worth beginning your trouble shooting by rebooting (vagrant destroy/vagrant up).
+
+For changes to the vagrant file (e.g., adding a fourth VM), the safest option is to vagrant destroy/vagrant up to test your changes. Ideally though, you should try to avoid destroying your VMs – so if you can reprovision them while running that is preferred. For example, in some situations, like changing the network configurations, vagrant reload will be a more efficient approach. Again, the same applies where a complete reboot will be a good place to start troubleshooting if things do not work as expected.

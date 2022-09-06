@@ -8,5 +8,5 @@ CREATE TABLE leftovers (
     PRIMARY KEY (leftovers_ID)
 );
 
-INSERT INTO leftovers VALUES ("Sushi Station", "70 Albany Street", "teriyaki tofu rice balls", "$1.99", 2022-09-3);
-INSERT INTO leftovers VALUES ("New World", "133 Great King Street", "giraffe bread/rolls", "$2.99", 2022-09-5);
+INSERT INTO leftovers(restaurant_name, address, description, price, latest_collection) VALUES ("Sushi Station", "70 Albany Street", "teriyaki tofu rice balls", "$1.99", "2022-09-3");
+INSERT INTO leftovers(restaurant_name, address, description, price, latest_collection) VALUES ("New World", "133 Great King Street", "giraffe bread/rolls", "$2.99", "2022-09-5");

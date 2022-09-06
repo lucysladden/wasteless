@@ -28,7 +28,7 @@
 
     $conn = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-    $conn->query($query);
+    $result = $conn->query($query);
 
     ?>
 
